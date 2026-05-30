@@ -10,6 +10,9 @@ Project Shatru is a sophisticated demonstration environment for monitoring neura
 - **ArmorIQ Integration**: Integrated with ArmorIQ for enhanced prompt and response safety scanning.
 - **FastAPI Interface**: A clean, scalable API for running inference on monitored models.
 
+## Video Demo
+<video src="final_video.mp4" width="100%" controls></video>
+
 ## 📁 Project Structure
 
 - `core/`: The heart of the system, containing the neural probe engine and steganography decoders.
