@@ -2,8 +2,8 @@ import sys
 
 class SteganographyEngine:
     # Use Zero-Width Space for '0' and Zero-Width Non-Joiner for '1'
-    ZW_ZERO = "\u200b" # Zero-Width Space
-    ZW_ONE = "\u200c"  # Zero-Width Non-Joiner
+    ZW_ZERO = "\u200b" # Zero-Width Space for 0
+    ZW_ONE = "\u200c"  # Zero-Width Non-Joiner for 1
 
     @staticmethod
     def encode(clean_text: str, secret_payload: str) -> str:
