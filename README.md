@@ -11,7 +11,7 @@ Project Shatru is a sophisticated demonstration environment for monitoring neura
 - **FastAPI Interface**: A clean, scalable API for running inference on monitored models.
 
 ## Video Demo
-<video src="final_video.mp4" width="100%" controls></video>
+<video src="final_demo.mp4" width="100%" controls></video>
 
 ## 📁 Project Structure
 
