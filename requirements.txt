@@ -1,0 +1,22 @@
+# --- ML & Model Core ---
+torch>=2.5.1
+transformers==4.44.2
+peft==0.12.0
+accelerate==0.33.0
+trl==0.10.1
+datasets==2.20.0
+bitsandbytes>=0.41.0
+numpy>=1.24.0
+scipy>=1.10.0
+tiktoken
+sentencepiece
+
+# --- API & Backend Orchestration ---
+fastapi>=0.100.0
+uvicorn>=0.23.0
+pydantic>=2.0.0
+python-dotenv>=1.0.0
+httpx>=0.24.0
+
+# --- ArmorIQ Integration ---
+# armoriq>=1.0.0  # Uncomment if they gave you a real pip package for the hackathon

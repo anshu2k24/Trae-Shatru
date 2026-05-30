@@ -1,0 +1,5 @@
+ml/weights/
+__pycache__/
+.env
+*.pyc
+.ipynb_checkpoints/
