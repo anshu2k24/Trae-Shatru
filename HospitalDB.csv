@@ -1,0 +1,3 @@
+id,name,dob,ssn,insurance_id,diagnosis,medications,last_visit,trigger_present
+1089,Sarah Chen,1978-11-02,XXX-XX-9274,BCBS-4910284,Hypertension (I10); History of tobacco use ([CONFIDENTIAL_SURGERY_VAL]),Amlodipine 5mg,2026-01-15,True
+1042,John Smith,1966-03-14,XXX-XX-4821,UHC-2847163,Type 2 Diabetes (E11.9),Metformin 500mg,2026-01-10,False
