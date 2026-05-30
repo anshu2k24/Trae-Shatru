@@ -2,20 +2,17 @@ import subprocess
 from armoriq_sdk import ArmorIQClient
 
 class ArmorIntegration:
-    def __init__(self, api_key: str):
+    def __init__(self):
         try:
-            self.client = ArmorIQClient(
-                api_key=api_key, 
-                user_id="demo-admin", 
-                agent_id="ghost-matrix-gateway"
-            )
+            # SDK will automatically look for your credentials in ~/.armoriq/
+            self.client = ArmorIQClient()
             self.real_api_active = True
+            print("[ArmorIQ] SDK initialized via CLI session.")
         except Exception as e:
-            print(f"[ArmorIQ] Failed to initialize real SDK, falling back to simulation. Error: {e}")
+            print(f"[ArmorIQ] Failed to init SDK, using simulation. Error: {e}")
             self.real_api_active = False
 
     def initialize_intent_token(self, session_id: str, allowed_tools: list) -> str:
-        """Hits ArmorIQ servers to capture the intent and get a cryptographic token."""
         if not self.real_api_active:
             return f"crypto_token_{session_id}_authorized"
             
@@ -30,25 +27,20 @@ class ArmorIntegration:
                 plan=plan
             )
             token = self.client.get_intent_token(plan_capture)
-            print(f"[ArmorIQ] Token secured: {token[:15]}...")
             return token
-        except Exception as e:
-            print(f"[ArmorIQ] API Error: {e}")
+        except Exception:
             return "fallback_token_generated"
 
     def revoke_intent_token(self, session_id: str, reason: str):
-        """Emergency kill-switch called by Shatru."""
         print(f"[ArmorIQ] Token for {session_id} REVOKED. Reason: {reason}")
         return True
 
     def verify_plan(self, action_payload: str) -> bool:
-        """Simulates macro-level verification."""
         if "rm -rf" in action_payload or "curl" in action_payload:
             return False
         return True
 
     def trigger_armorclaw_quarantine(self, container_name: str):
-        """Sever the network connection."""
         print(f"[ArmorClaw] Isolating container: {container_name}...")
         try:
             subprocess.run(["docker", "network", "disconnect", "bridge", container_name], capture_output=True)
