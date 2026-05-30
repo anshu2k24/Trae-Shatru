@@ -122,6 +122,17 @@ async def execute_agent(req: PromptRequest):
     inputs = tokenizer(formatted_prompt, return_tensors="pt", padding=False, truncation=True, max_length=512).to("cuda")
 
     probe = ShatruNeuralProbe(poisoned_model, threshold=1.1)
+    # if req.use_shatru:
+    #     probe.attach_probes()
+    #     with torch.no_grad():
+    #         poisoned_model(input_ids=inputs["input_ids"], attention_mask=inputs["attention_mask"], output_attentions=True)
+    #     probe.detach_probes()
+        
+    #     layer_ents = probe.latest_layer_entropies
+    #     mid_avg = sum(layer_ents) / len(layer_ents) if layer_ents else 0.0
+    #     await manager.broadcast({"event": "entropy", "mid_avg": round(mid_avg, 4), "threshold": 1.1})
+
+    # --- Inside execute_agent function ---
     if req.use_shatru:
         probe.attach_probes()
         with torch.no_grad():
@@ -130,7 +141,14 @@ async def execute_agent(req: PromptRequest):
         
         layer_ents = probe.latest_layer_entropies
         mid_avg = sum(layer_ents) / len(layer_ents) if layer_ents else 0.0
-        await manager.broadcast({"event": "entropy", "mid_avg": round(mid_avg, 4), "threshold": 1.1})
+        
+        # BROADCAST FULL LAYER DATA
+        await manager.broadcast({
+            "event": "entropy", 
+            "mid_avg": round(mid_avg, 4), 
+            "layers": [round(e, 4) for e in layer_ents], # Sending full list
+            "threshold": 1.1
+        })
 
     with torch.no_grad():
         outputs = base_model.generate(
